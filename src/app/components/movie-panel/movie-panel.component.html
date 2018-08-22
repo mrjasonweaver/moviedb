@@ -1,0 +1,25 @@
+<form [formGroup]="editData" (submit)="onSubmitData(editData)" class="edit-form">  
+  <div class="form-content">
+    <mat-form-field  appearance="outline" floatLabel="always">
+      <mat-label>Title</mat-label>
+      <input matInput required formControlName="title">
+    </mat-form-field>
+    <mat-form-field  appearance="outline" floatLabel="always">
+      <mat-label>Genre</mat-label>
+      <input matInput required formControlName="genre">
+    </mat-form-field>
+    <mat-form-field  appearance="outline" floatLabel="always">
+      <mat-label>Actors</mat-label>
+      <input matInput required formControlName="actors">
+    </mat-form-field>
+    <mat-form-field  appearance="outline" floatLabel="always">
+      <mat-label>Year</mat-label>
+      <input matInput required formControlName="year">
+    </mat-form-field>
+    <mat-form-field  appearance="outline" floatLabel="always">
+      <mat-label>Rating</mat-label>
+      <input matInput required formControlName="rating">
+    </mat-form-field>
+  </div>
+</form>
+

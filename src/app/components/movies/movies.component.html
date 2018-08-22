@@ -1,0 +1,57 @@
+<mat-card class="container">
+  <mat-table #table [dataSource]="movies">
+
+    <ng-container matColumnDef="checkbox">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let movie"> 
+        <mat-icon *ngIf="+selected === movie.id" color="accent">check_box</mat-icon>
+        <mat-icon *ngIf="+selected !== movie.id" class="ckbx-outline">check_box_outline_blank</mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+      <mat-cell *matCellDef="let movie"> {{ movie.title }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="genre">
+      <mat-header-cell *matHeaderCellDef> Genre </mat-header-cell>
+      <mat-cell *matCellDef="let movie"> {{ movie.genre }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actors">
+      <mat-header-cell *matHeaderCellDef> Actors </mat-header-cell>
+      <mat-cell *matCellDef="let movie">
+        <ul>
+          <li *ngFor="let actor of movie.actors">
+            {{ actor.firstName }} {{ actor.lastName }}
+          </li>
+        </ul>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="year">
+      <mat-header-cell *matHeaderCellDef> Year </mat-header-cell>
+      <mat-cell *matCellDef="let movie"> {{ movie.year }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="rating">
+      <mat-header-cell *matHeaderCellDef> Rating </mat-header-cell>
+      <mat-cell *matCellDef="let movie"> {{ movie.rating }} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns;"
+      (click)="onSelect(row.id)"
+      [ngClass]="{'loading' : loading, 'selected' : +selected === row.id}">
+    </mat-row>
+
+  </mat-table>
+  <ng-template #nomovies>
+    <div class="none-found-container" fxLayout="row" fxLayoutAlign="center center">
+      <mat-icon>announcement</mat-icon> 
+      <h3>No movies found</h3>
+    </div>
+  </ng-template>
+</mat-card>
