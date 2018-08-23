@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 
 import { IParams, params } from '../../models/uiState/uiState.model';
 import { MoviesStore } from '../../store/movies/movies.store';
@@ -40,14 +40,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.editMovie = this.formBuilder.group({
       id: '',
       genre: ['', Validators.required ],
-      actors: [
-        { firstName: ['', Validators.required ] },
-        { lastName: ['', Validators.required ] }
-      ],
+      actors: [],
       title: ['', Validators.required ],
       year: ['', Validators.required ],
-      rating: ['', Validators.required ],
-      poster: ''
+      rating: ['', Validators.required ]
     });
     this.selectedMovieSub = this.moviesStore.selectedMovie$.subscribe(movie => {
       this.editMovie.patchValue(movie);
@@ -56,6 +52,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.routeQPSub.unsubscribe();
+    this.selectedMovieSub.unsubscribe();
+  }
+
+  get actors() {
+    return this.editMovie.get('actors').value;
   }
 
   private getParams(p): IParams {
@@ -69,12 +70,43 @@ export class DashboardComponent implements OnInit, OnDestroy {
   select(value: string): Promise<boolean> {
     const selected = value;
     const { searchTerm } = this.routeQueryParams.params;
-    return this.router.navigate(['/dashboard'], { queryParams: { searchTerm, selected } });
+    return this.router.navigate(['/dashboard'], { queryParams: {selected, searchTerm } });
+  }
+
+  submitMovie(movie): Promise<boolean> {
+    const { searchTerm } = this.routeQueryParams.params;
+    this.uiStateStore.startAction('Saving movie...', false);
+    this.moviesStore.updateMovie(movie.value);
+    return this.router.navigate(['/dashboard'], { queryParams: { searchTerm } });
+  }
+
+  deleteMovie(movie): Promise<boolean> {
+    const { searchTerm } = this.routeQueryParams.params;
+    this.uiStateStore.startAction('Deleting movie...', false);
+    this.moviesStore.deleteMovie(movie.id);
+    return this.router.navigate(['/dashboard'], { queryParams: { searchTerm } });
   }
 
   onSidenavClose(): Promise<boolean> {
     const { searchTerm } = this.routeQueryParams.params;
     return this.router.navigate(['/dashboard'], { queryParams: { searchTerm } });
+  }
+
+  addActor(event): void {
+    const { input, value } = event;
+    if ((value || '').trim()) {
+      const actors = [ ...this.actors, value ]; // Add actor
+      this.editMovie.patchValue({actors});
+    }
+    if (input) {
+      input.value = ''; // Reset input value
+    }
+  }
+
+  removeActor(actor): void {
+    const index = this.actors.indexOf(actor);
+    const actors = this.actors.filter((x, i) => i !== index);
+    this.editMovie.patchValue({actors});
   }
 
 }

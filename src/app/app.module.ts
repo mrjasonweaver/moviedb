@@ -6,8 +6,8 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { MatToolbarModule, MatButtonModule, MatCheckboxModule, MatTooltipModule, MatCardModule, MatSnackBarModule,
   MatInputModule, MatTableModule, MatPaginatorModule, MatIconModule, MatProgressBarModule,
-  MatSidenavModule, MatSlideToggleModule, MatDividerModule, MatExpansionModule,
-  MatSortModule } from '@angular/material';
+  MatSidenavModule, MatSlideToggleModule, MatDividerModule, MatChipsModule,
+  MatSliderModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgForageModule } from 'ngforage';
 
@@ -50,10 +50,10 @@ import { MoviePanelComponent } from './components/movie-panel/movie-panel.compon
     MatSidenavModule,
     MatSlideToggleModule,
     MatDividerModule,
-    MatExpansionModule,
+    MatChipsModule,
     MatProgressBarModule,
     MatSnackBarModule,
-    MatSortModule,
+    MatSliderModule,
     FlexLayoutModule,
     NgForageModule,
     RouterModule.forRoot([

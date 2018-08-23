@@ -1,27 +1,26 @@
-export interface IActor {
-  firstName: string;
-  lastName: string;
-}
-
 export interface IMovie {
-  id: number;
+  id: string;
   genre: string;
-  actors: IActor[];
+  actors: string[];
   title: string;
   year: number;
   rating: number;
-  poster: string;
 }
 
 export const initialMovie: IMovie = {
-  id: 1,
+  id: '0',
   genre: 'Horror',
-  actors: [
-    {firstName: 'John', lastName: 'Wayne'},
-    {firstName: 'John', lastName: 'Doe'}
-  ],
+  actors: [ 'John Wayne', 'John Doe' ],
   title: 'Example Movie',
   year: 1992,
-  rating: 5,
-  poster: 'posterId'
+  rating: 5
+};
+
+export const newMovie: IMovie = {
+  id: '1',
+  genre: '',
+  actors: [],
+  title: '',
+  year: 1940,
+  rating: 0
 };

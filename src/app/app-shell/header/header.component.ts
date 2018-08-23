@@ -29,9 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.pSub = this.uiStateStore.routeQueryParams$.subscribe(qp => this.routeQueryParams = qp);
     this.ivSub = this.uiStateStore.inputValue$.subscribe(iv => {
       this.searchTerm = iv;
-      if (this.searchTerm) {
-        this.onSearchChange();
-      }
+      this.searchTerm ? this.onSearchChange() : this.router.navigate(['/dashboard']);
     });
     this.crSub = this.uiStateStore.currentRoute$.subscribe((cr: IRouteData) => cr ? this.currentRoute = cr.title.toLowerCase() : null);
   }
@@ -48,6 +46,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onSearchChange(): Promise<boolean> {
     return this.router.navigate(['/dashboard'], { queryParams: { searchTerm: this.searchTerm } });
+  }
+
+  addNew(): Promise<boolean> {
+    return this.router.navigate(['/dashboard'], { queryParams: { selected: 'new' } });
   }
 
 }

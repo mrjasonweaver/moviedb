@@ -1,11 +1,11 @@
 <mat-card class="container">
-  <mat-table #table [dataSource]="movies">
+  <mat-table #table [dataSource]="movies" *ngIf="movies.length; else nomovies">
 
     <ng-container matColumnDef="checkbox">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let movie"> 
-        <mat-icon *ngIf="+selected === movie.id" color="accent">check_box</mat-icon>
-        <mat-icon *ngIf="+selected !== movie.id" class="ckbx-outline">check_box_outline_blank</mat-icon>
+        <mat-icon *ngIf="selected === movie.id" color="accent">check_box</mat-icon>
+        <mat-icon *ngIf="selected !== movie.id" class="ckbx-outline">check_box_outline_blank</mat-icon>
       </mat-cell>
     </ng-container>
 
@@ -24,7 +24,7 @@
       <mat-cell *matCellDef="let movie">
         <ul>
           <li *ngFor="let actor of movie.actors">
-            {{ actor.firstName }} {{ actor.lastName }}
+            {{ actor }}
           </li>
         </ul>
       </mat-cell>
@@ -44,7 +44,7 @@
     <mat-row
       *matRowDef="let row; columns: displayedColumns;"
       (click)="onSelect(row.id)"
-      [ngClass]="{'loading' : loading, 'selected' : +selected === row.id}">
+      [ngClass]="{'loading' : loading, 'selected' : selected === row.id}">
     </mat-row>
 
   </mat-table>

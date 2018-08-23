@@ -2,14 +2,20 @@
 <mat-sidenav-container class="app-container" *ngIf="(uiStateStore.uiState$ | async) as uiState">
   <mat-sidenav fixedInViewport="'true'" fixedTopGap="64" position="end" mode="side" [opened]="uiState.isSelected">
     <div class="secondary-toolbar secondary-toolbar-sidenav">
-      <mat-toolbar>
+      <mat-toolbar *ngIf="(uiStateStore.routeQueryParams$ | async) as params">
         <mat-icon class="close-icon" (click)="onSidenavClose()" color="primary">close</mat-icon>
-        <span class="title-bar-text">View/Edit Movie</span>
+        <span class="title-bar-text">{{ params.params.selected }}</span>
       </mat-toolbar>
     </div>
     <mat-card class="no-shadow">
       <mat-card-content>
-        <app-movie-panel [editData]="editMovie"></app-movie-panel>
+        <app-movie-panel
+          [editData]="editMovie"
+          [actors]="actors"
+          (addActor)="addActor($event)"
+          (removeActor)="removeActor($event)"
+          (deleteMovie)="deleteMovie($event)"
+          (submitData)="submitMovie($event)"></app-movie-panel>
       </mat-card-content>
     </mat-card>
   </mat-sidenav>
@@ -22,7 +28,6 @@
         [selected]="params.params.selected"
         (selectMovie)="select($event)">
       </app-movies>
-      {{ uiState | json }}
     </div>
   </div>
 </mat-sidenav-container>

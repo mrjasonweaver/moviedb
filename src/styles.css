@@ -74,6 +74,8 @@ body { margin: 0; }
 }
 .header .mat-button {
   margin-right: 25px;
+  font-size: 16px;
+  text-transform: uppercase;
 }
 nav ul {
   padding: 0;
@@ -171,4 +173,10 @@ nav a:hover, nav .active {
 .mat-column-checkbox,
 .mat-column-rating {
   max-width: 60px;
+}
+.mat-row {
+  padding: 5px 0;
+}
+.panel-divider {
+  padding: 20px 0;
 }
