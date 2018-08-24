@@ -29,7 +29,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.pSub = this.uiStateStore.routeQueryParams$.subscribe(qp => this.routeQueryParams = qp);
     this.ivSub = this.uiStateStore.inputValue$.subscribe(iv => {
       this.searchTerm = iv;
-      this.searchTerm ? this.onSearchChange() : this.router.navigate(['/dashboard']);
+      const { selected } = this.routeQueryParams.params;
+      this.searchTerm ? this.onSearchChange() : this.router.navigate(['/dashboard'], { queryParams: { selected } });
     });
     this.crSub = this.uiStateStore.currentRoute$.subscribe((cr: IRouteData) => cr ? this.currentRoute = cr.title.toLowerCase() : null);
   }

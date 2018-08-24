@@ -1,14 +1,16 @@
 <form [formGroup]="editData" (submit)="onSubmitData(editData)" class="edit-form">  
   <div class="form-content">
-    <mat-form-field appearance="outline" floatLabel="always">
-      <mat-label>Title</mat-label>
-      <input matInput required formControlName="title">
-    </mat-form-field>
-    <mat-form-field appearance="outline" floatLabel="always">
-      <mat-label>Genre</mat-label>
-      <input matInput required formControlName="genre">
-    </mat-form-field>
-    <mat-form-field appearance="outline" floatLabel="always">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <mat-form-field appearance="outline" floatLabel="always" class="half-field">
+        <mat-label>Title</mat-label>
+        <input matInput required formControlName="title">
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always" class="half-field">
+        <mat-label>Genre</mat-label>
+        <input matInput required formControlName="genre">
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline" floatLabel="always" class="full-field">
       <mat-label>Actors</mat-label>
       <mat-chip-list #chipList FormArrayName="actors">
         <mat-chip *ngFor="let actor of actors"
@@ -17,21 +19,23 @@
           {{ actor }}
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
-        <input placeholder="New Actor..."
+        <input placeholder="Add actor..."
           [matChipInputFor]="chipList"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
           [matChipInputAddOnBlur]="addOnBlur"
           (matChipInputTokenEnd)="add($event)">
       </mat-chip-list>
     </mat-form-field>
-    <mat-form-field appearance="outline" floatLabel="always">
-      <mat-label>Year</mat-label>
-      <input matInput required formControlName="year">
-    </mat-form-field>
-    <mat-form-field appearance="outline" floatLabel="always">
-      <mat-label>Rating</mat-label>
-      <input matInput required formControlName="rating">
-    </mat-form-field>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <mat-form-field appearance="outline" floatLabel="always" class="half-field">
+        <mat-label>Year</mat-label>
+        <input matInput required type="number" min="1900" max="2020" formControlName="year">
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always" class="half-field">
+        <mat-label>Rating</mat-label>
+        <input matInput required type="number" min="1" max="10" formControlName="rating">
+      </mat-form-field>
+    </div>
   </div>
   <button type="submit" mat-raised-button color="primary" [disabled]="editData.invalid">Save</button>
 </form>
